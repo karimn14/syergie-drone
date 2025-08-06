@@ -1,0 +1,81 @@
+{
+  "fileType": "Plan",
+  "mission": {
+    "cruiseSpeed": 5,
+    "firmwareType": 12,
+    "hoverSpeed": 3,
+    "items": [
+      {
+        "command": 16,
+        "doJumpId": 1,
+        "frame": 3,
+        "type": "SimpleItem",
+        "params": [
+          0,
+          0,
+          0,
+          null,
+          -6.9025,
+          107.6186,
+          10
+        ],
+        "autoContinue": true,
+        "Altitude": 10,
+        "AltitudeMode": 1
+      },
+      {
+        "command": 16,
+        "doJumpId": 2,
+        "frame": 3,
+        "type": "SimpleItem",
+        "params": [
+          0,
+          0,
+          0,
+          null,
+          -6.9028,
+          107.619,
+          10
+        ],
+        "autoContinue": true,
+        "Altitude": 10,
+        "AltitudeMode": 1
+      },
+      {
+        "command": 16,
+        "doJumpId": 3,
+        "frame": 3,
+        "type": "SimpleItem",
+        "params": [
+          0,
+          0,
+          0,
+          null,
+          -6.9032,
+          107.6188,
+          10
+        ],
+        "autoContinue": true,
+        "Altitude": 10,
+        "AltitudeMode": 1
+      }
+    ],
+    "plannedHomePosition": [
+      -6.9025,
+      107.6186,
+      10
+    ],
+    "vehicleType": 2,
+    "version": 2
+  },
+  "geoFence": {
+    "circles": [],
+    "polygons": [],
+    "version": 2
+  },
+  "rallyPoints": {
+    "points": [],
+    "version": 2
+  },
+  "version": 1
+}

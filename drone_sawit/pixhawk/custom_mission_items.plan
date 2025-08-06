@@ -1,0 +1,33 @@
+{
+  "fileType": "Plan",
+  "geoFence": {
+    "circles": [],
+    "polygons": [
+      {
+        "points": [
+          {"lat": 1.23456, "lon": 103.12345},
+          {"lat": 1.23478, "lon": 103.12345},
+          {"lat": 1.23478, "lon": 103.12367},
+          {"lat": 1.23456, "lon": 103.12367}
+        ]
+      }
+    ],
+    "version": 2
+  },
+  "mission": {
+    "cruiseSpeed": 5,
+    "firmwareType": 12,
+    "hoverSpeed": 3,
+    "items": [
+      {"autoContinue": true, "command": 22, "coordinate": [1.23456, 103.12345, 10], "doJumpId": 1, "frame": 3, "params": [0, 0, 0, 0, 0, 0, 0], "type": "SimpleItem"},
+      {"autoContinue": true, "command": 16, "coordinate": [1.23478, 103.12367, 10], "doJumpId": 2, "frame": 3, "params": [0, 0, 0, 0, 0, 0, 0], "type": "SimpleItem"},
+      {"autoContinue": true, "command": 201, "coordinate": [1.23470, 103.12356, 10], "doJumpId": 3, "frame": 3, "params": [0, 0, 0, 0, 0, 0, 0], "type": "SimpleItem"},
+      {"autoContinue": true, "command": 20, "coordinate": [1.23456, 103.12345, 0], "doJumpId": 4, "frame": 3, "params": [0, 0, 0, 0, 0, 0, 0], "type": "SimpleItem"}
+    ],
+    "plannedHomePosition": [1.23456, 103.12345, 10],
+    "vehicleType": 2,
+    "version": 2
+  },
+  "rallyPoints": {"points": [{"lat": 1.23460, "lon": 103.12350, "alt": 20}], "version": 2},
+  "version": 1
+}

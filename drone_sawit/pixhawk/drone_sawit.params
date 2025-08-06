@@ -1,0 +1,39 @@
+# drone_sawit.params – PX4 configuration for Drone Sawit
+# SERIAL
+SER_TEL2_BAUD 57600          # Telemetry 2 baudrate for Jetson
+
+# MISSION
+MIS_TAKEOFF_ALT 10           # Takeoff altitude (m)
+MIS_LTRMIN_ALT 10            # Loiter minimum altitude (m)
+MIS_LTRMAX_ALT 100           # Loiter maximum altitude (m)
+
+# FLIGHT
+MPC_XY_CRUISE 5              # Cruise speed (m/s)
+MPC_XY_VEL_MAX 10            # Max horizontal velocity (m/s)
+MPC_Z_VEL_MAX_UP 3           # Max climb rate (m/s)
+MPC_Z_VEL_MAX_DN 2           # Max descent rate (m/s)
+
+# RTL (Return to Launch)
+RTL_RETURN_ALT 30            # RTL return altitude (m)
+RTL_DESCEND_ALT 10           # RTL descend altitude (m)
+RTL_LAND_DELAY 5             # RTL land delay (s)
+
+# GEOFENCE
+GF_MAX_HOR_DIST 1000         # Max horizontal geofence distance (m)
+GF_MAX_VER_DIST 100          # Max vertical geofence distance (m)
+GF_ACTION 4                  # Action on geofence breach (4=RTL)
+
+# SAFETY
+COM_OBL_ACT 1                # Obstacle avoidance action (1=warn)
+COM_LOW_BAT_ACT 2            # Low battery action (2=RTL)
+COM_RC_LOSS_T 2              # RC loss timeout (s)
+COM_RC_LOSS_ACT 1            # RC loss action (1=Hold)
+
+# LOGGING
+SDLOG_MODE 1                 # Always log
+
+# RALLY (example, can be set via QGC)
+# RALLY_POINT_0 1.23456 103.12345 20
+# RALLY_POINT_1 1.23478 103.12367 20
+
+# Add further parameters as needed for your mission profile

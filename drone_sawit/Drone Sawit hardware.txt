@@ -1,0 +1,74 @@
+Drone Sawit hardware
+
+Quadcopter 2312 BOM (with Estimated Prices in IDR)
+No.ComponentDescriptionQtyUnit Price (IDR)Total (IDR)1FrameTarot Iron Man 680 Pro Hexacopter11,850,0001,850,0002MotorsA2212 1000KV Brushless Motor6120,000720,0003ESCs30A Brushless ESC690,000540,0004Propellers1045 Propeller Pair (CW + CCW)350,000150,0005Flight ControllerPixhawk 2.4.8 with GPS12,500,0002,500,0006Battery4S 10000mAh 25C LiPo12,200,0002,200,0007Power DistributionPDB with XT60 / XT901150,000150,0008Jetson ComputerJetson Orin Nano 4GB Dev Board Suite16,000,0006,000,0009Telemetry Module915 MHz 500mW Telemetry (MAVLink)1750,000750,00010Primary LiDAR SensorBenewake CE30-C Solid-State LiDAR17,750,0007,750,00010aAuxiliary LiDAR Sensors	Benewake TF-Luna (left, right, rear, downward)	4	500,000	2,000,00011Sprayer SystemCustom sprayer + brackets (200–300 g)11,500,0001,500,00012Mounting MaterialsCables, vibration dampers, brackets1300,000300,00013Charger4S-compatible Smart Charger11,000,0001,000,00014Remote ControlFlySky i6X + Receiver (6CH min)11,100,0001,100,00015Shipping + ContingencySpare props, unforeseen parts11,500,0001,500,000
+💰 Total Estimated Cost: ~IDR 27,035,000 (quadcopter, CE30-C + 4× TF-Luna, Orin Nano 4GB, all prices updated)
+
+🛠 Notes:
+• Flight time: ~18–22 minutes with 2.5 kg total weight.
+• Payload Capacity: ~1.2–1.5 kg depending on tuning and altitude.
+• Main Propulsion: 2312 Series Brushless DC Motor (e.g., DJI 2312, 960–1000KV, ~850–950g thrust, 55g, 3mm shaft)
+• Quadcopter configuration: 4 motors, 4 ESCs, 2 pairs of props
+• Compatible Props: 9450/1045 (9–10 inch)
+• ESC: 20A BLHeli or equivalent
+• Upgradable: To 6S battery and higher thrust motors if needed.
+• Note: Quadcopter has no motor redundancy. Max recommended takeoff weight ~2.5kg for safe operation. Suitable for moderate wind and agricultural use.
+• Sensor Configuration: Primary forward LiDAR (Benewake CE30-C) for mapping/obstacle avoidance, supplemented by TF-Luna sensors for multi-directional close-proximity awareness.
+• Onboard Computer: Jetson Orin Nano 4GB Dev Board Suite offers significantly higher AI capability for advanced vision and sensor fusion, with slightly higher power consumption (~7–15W) compared to Jetson Nano B01.
+• LiDAR Impact: Estimated +135g weight and +5.4W power consumption due to upgraded LiDAR. Original flight time/payload may be slightly reduced.
+
+
+Bill of Materials (BOM) with Sourcing Links
+Component	Specification	Quantity	Estimated Unit Price (IDR)	Total (IDR)	Sourcing Link	Frame	Tarot Iron Man 650 Foldable 3K Carbon Fiber Quadcopter Frame	1	1,825,000	1,825,000	Shopee	Motors	2312 Series Brushless Motor (e.g., DJI 2312, 960–1000KV)	4	250,000	1,000,000	Tokopedia	ESCs	20A Brushless ESC	4	90,000	360,000	Lazada	Propellers	1045 Propeller Pair (CW+CCW)	2	50,000	100,000	JSumo	Flight Controller	Pixhawk 2.4.8 with GPS Module	1	2,500,000	2,500,000	Rees52	Battery	4S 10000mAh 25C LiPo Battery	1	2,200,000	2,200,000	HobbyKing	Power Distribution	PDB with XT60	1	150,000	150,000	eBay	Onboard Computer	Jetson Orin Nano 4GB Dev Board Suite	1	6,000,000	6,000,000	AliExpress	Telemetry Module	915 MHz 500mW Telemetry Set	1	750,000	750,000	Ubuy	Auxiliary LiDAR Sensors	Benewake TF-Luna (left, right, rear, downward)	4	500,000	2,000,000	eBay	Sprayer System	Custom sprayer + bracket	1	1,500,000	1,500,000	Custom fabrication	Mounts & Wiring	Misc wires, brackets, dampers	-	300,000	300,000	Local electronics store	Charger	4S LiPo Charger	1	1,000,000	1,000,000	HobbyKing	Remote Controller	FlySky i6X + Receiver (6CH min)	1	1,100,000	1,100,000	Blibli	Shipping & Contingency	Estimated buffer	-	1,500,000	1,500,000	-	Total Estimated Cost		
+
+
+	28,035,000	
+	Note: Prices are approximate and may vary based on the supplier and current market conditions.
+
+🛠️ Integration Considerations
+• Weight Management: Ensure the total weight, including all components, does not exceed the frame's payload capacity to maintain optimal flight performance.
+• Power Distribution: Use a reliable power distribution board to manage power supply to all components, ensuring voltage and current requirements are met.
+• Cooling Solutions: Implement adequate cooling for the Jetson Orin Nano to prevent overheating during intensive processing tasks.
+• Vibration Dampening: Mount sensitive components like the LiDAR sensor and onboard computer on vibration-dampening materials to ensure data accuracy and component longevity.
+• Note: Quadcopter configuration has no motor redundancy. Max recommended takeoff weight ~2.5kg for safe operation. Suitable for moderate wind and agricultural use.
+
+
+
+Drone Sawit Hexacopter Integration Guide
+📦 1. Mechanical Assembly
+StepTask1.1Assemble the Tarot Iron Man 680 Pro frame according to the manual. Ensure arms are secured and fold mechanisms locked.1.2Mount A2212 1000KV motors on each arm using the included screws and thread locker. Orient CW/CCW correctly.1.3Install ESCs on the arms or inside the frame. Secure with zip ties or double-sided tape.1.4Mount the Pixhawk flight controller using vibration-dampening foam or a shock-absorbing platform at the center.1.5Mount the Jetson Orin Nano inside a protective case (e.g., aluminum) on top of the frame or payload plate.1.6Mount LiDAR on front-facing vibration isolation bracket, and the sprayer system below the drone CG (center of gravity).1.7Route propeller wires and battery cable cleanly. Label wires if needed.1.8Attach 1045 propellers, ensuring matching CW/CCW direction with motor spin. Torque lightly.
+🔌 2. Electrical Wiring
+StepTask2.1Connect ESC signal wires to Pixhawk (MAIN OUT 1–6).2.2Connect ESC power input (red/black) to the Power Distribution Board (PDB).2.3Solder or plug XT60 from the battery into PDB. Verify polarity!2.4Power Jetson Orin Nano via separate 5V/4A BEC or 2S-4S regulator from battery.2.5Connect Pixhawk Power Module to battery and plug into Pixhawk’s power port.2.6Plug GPS/Compass module into Pixhawk (I2C + Serial). Mount away from power wires.2.7Connect LiDAR (UART/I2C) to Jetson (for SLAM or Altitude Hold) or Pixhawk directly (depending on use).2.8Optional: Connect telemetry radio to Pixhawk TELEM1, and USB/UART link between Jetson and Pixhawk for MAVLink control.
+⚙️ 3. Software & Configuration
+StepTask3.1Flash ArduCopter or PX4 firmware to Pixhawk using Mission Planner or QGroundControl.3.2Calibrate: Accelerometer, Compass, RC, ESC, Radio Failsafe.3.3Configure motor order (1–6) and verify motor direction (adjust in ESCs if reversed).3.4Set flight mode: Stabilize, AltHold, Loiter, Auto. Tune PID values for 4S + A2212 + 680 frame.3.5Flash JetPack on Jetson Orin Nano. Install: ROS2, MAVROS, OpenCV, YOLOv8, or your vision pipeline.3.6Enable MAVLink communication between Jetson and Pixhawk for companion control (telemetry, commands, mission injection).3.7Integrate sprayer trigger via PWM relay (connected to Pixhawk AUX OUT 1 or Orin Nano GPIO). Test logic high → spray.
+🔋 4. Power & Load Testing
+StepTask4.1With propellers OFF, test power-up sequence. Check ESC arming tone, Pixhawk LED status, Jetson boot.4.2Connect to Mission Planner → confirm GPS lock, battery voltage, sensors.4.3Arm motors without props and test throttle response.4.4Weigh drone with battery, Jetson, sprayer filled. Confirm TWR < 2.2 kg, or adjust prop size/motor.4.5Perform hover test in Stabilize/Loiter mode. Trim as needed.4.6Record current draw and flight time to validate ~20 minutes goal.
+🧠 5. AI Inference Pipeline (Orin Nano)
+StepTask5.1Setup USB or CSI camera, mount on forward bracket.5.2Install YOLOv8 or custom trained model (for tree detection, flower identification).5.3Run inference on captured frames. Trigger sprayer GPIO if detection confidence > threshold.5.4Log detections + timestamps (optional: export to SD card).5.5Optional: overlay inference box on GStreamer live video to GCS.
+🧯 6. Safety Checklist
+• ✅ Calibrate compass far from interference.
+• ✅ Use thread lock on all screws.
+• ✅ Double-check battery polarity before connection.
+• ✅ Enable failsafe (low battery, RC loss).
+• ✅ Keep prop guards if flying in dense plantation.
+
+
+
+
+
+📌 Pixhawk Pin Assignment Plan
+FunctionPixhawk Port / PinDirectionConnected DeviceNotesMotor 1 PWM OutputMAIN OUT 1OutputESC 1Standard motor layout for ArduCopter hexacopter (X config)Motor 2 PWM OutputMAIN OUT 2OutputESC 2Motor 3 PWM OutputMAIN OUT 3OutputESC 3Motor 4 PWM OutputMAIN OUT 4OutputESC 4Motor 5 PWM OutputMAIN OUT 5OutputESC 5Motor 6 PWM OutputMAIN OUT 6OutputESC 6LiDAR Serial Rx/TxSERIAL4 (UART4, pins on GPS2/I2C)Input/OutputTF-Luna LiDAR5V or 3.3V TTL UART depending on sensor (configure SERIAL4_BAUD = 115200)Telemetry MAVLinkTELEM1 (UART)BidirectionalJetson Orin Nano57600/921600 baud; for MAVROS or MAVLink-based mission controlI2C GPS+CompassGPS1 Port (5-pin)InputGPS/Compass Combo Module3.3V I2C + Serial; make sure compass is detected (COMPASS_TYPE)Sprayer PWM TriggerAUX OUT 1 (e.g., Channel 7)OutputArduino (GPIO trigger)Configure as relay or servo output (e.g., SERVO9_FUNCTION = 58)PowerPOWER portInputPower Module (voltage/current)For battery monitoringBuzzerBUZZER portOutputOptional piezo buzzerOptional but useful for prearm/failsafe alertsSafety SwitchSWITCH portInputOptional switchRequired only if safety checks enabled in firmwareI2C Expander (optional)I2C Port (External)BidirectionalAdditional sensors (baro, airspeed)Optional if expanding sensor suite
+🧠 Jetson–Pixhawk Wiring Example
+Jetson PinPixhawk PortNotesUART TX (/dev/ttyTHS1)TELEM1 RXMAVLink TX from JetsonUART RX (/dev/ttyTHS1)TELEM1 TXMAVLink RX to JetsonGNDGNDCommon ground
+⚙️ Pixhawk Parameter Configurations
+Set these via Mission Planner or QGroundControl:
+ini
+CopyEdit
+SERIAL1_BAUD    = 921600         # TELEM1 (Jetson)
+SERIAL1_PROTOCOL = 1             # MAVLink
+SERIAL4_BAUD    = 115200         # TF-Luna or similar
+SERIAL4_PROTOCOL = 9             # MAVLink2 or 5 for Rangefinder
+SERVO9_FUNCTION = 58             # Gripper or sprayer trigger
+
+🛠️ Sprayer Control Options
+OptionControl PathNotesPWMPixhawk AUX OUT → Arduino PWM InputArduino maps PWM to GPIO (valve ON/OFF)GPIOJetson Orin Nano → Arduino via I2C/SPICustom logic (Jetson AI → sprayer trigger)MAVLinkJetson → Pixhawk DO_SET_SERVOSet PWM level for sprayer output

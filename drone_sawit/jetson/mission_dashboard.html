@@ -1,0 +1,119 @@
+<!-- mission_dashboard.html
+Web dashboard UI for mission monitoring and analytics. Connects to FastAPI backend and supports WebSocket updates.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drone Sawit Mission Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f4; }
+        header { padding: 1em; background: #2e7d32; color: #fff; text-align: center; }
+        main { padding: 2em; }
+        .status { margin-bottom: 2em; }
+        .logs { background: #fff; padding: 1em; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        #refresh { margin-bottom: 1em; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Drone Sawit Mission Dashboard</h1>
+    </header>
+    <main>
+        <section class="status">
+            <h2>Status: <span id="mission-status">Idle</span></h2>
+            <div id="progress-bar-container" style="background:#ddd; border-radius:8px; width:100%; height:24px; margin:10px 0;">
+                <div id="progress-bar" style="background:#388e3c; height:100%; width:0%; border-radius:8px;"></div>
+            </div>
+            <button id="refresh">Refresh Status</button>
+            <div id="error-notification" style="color:#b71c1c; margin-top:10px;"></div>
+        </section>
+        <section class="map">
+            <h2>Live Map</h2>
+            <div id="map" style="height:300px; border-radius:8px; margin-bottom:20px;"></div>
+        </section>
+        <section class="video">
+            <h2>Live Video Feed</h2>
+            <div id="video-placeholder" style="background:#222; color:#fff; height:200px; display:flex; align-items:center; justify-content:center; border-radius:8px;">Video stream placeholder (RTSP/WebRTC)</div>
+        </section>
+        <section class="logs">
+            <h2>Mission Logs</h2>
+            <pre id="mission-logs">No logs yet.</pre>
+        </section>
+        <section class="replay">
+            <h2>Mission Replay</h2>
+            <button id="replay-btn">Replay Last Mission</button>
+            <pre id="replay-data"></pre>
+        </section>
+    </main>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        let map, marker;
+        function initMap() {
+            map = L.map('map').setView([-2.2, 113.9], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+            }).addTo(map);
+            marker = L.marker([-2.2, 113.9]).addTo(map);
+        }
+        async function fetchStatus() {
+            const resp = await fetch("/status");
+            const data = await resp.json();
+            document.getElementById("mission-status").textContent = data.status + ` (Battery: ${data.battery}%, Progress: ${Math.round(data.mission_progress*100)}%)`;
+            document.getElementById("progress-bar").style.width = `${Math.round(data.mission_progress*100)}%`;
+            if (data.lat && data.lon) {
+                marker.setLatLng([data.lat, data.lon]);
+                map.setView([data.lat, data.lon]);
+            }
+        }
+        async function fetchLogs() {
+            const resp = await fetch("/logs");
+            const data = await resp.json();
+            document.getElementById("mission-logs").textContent = data.logs;
+        }
+        async function fetchErrors() {
+            const resp = await fetch("/errors");
+            const data = await resp.json();
+            document.getElementById("error-notification").textContent = data.errors && data.errors !== "No errors." ? data.errors : "";
+        }
+        document.getElementById("refresh").onclick = () => {
+            fetchStatus();
+            fetchLogs();
+            fetchErrors();
+        };
+        document.getElementById("replay-btn").onclick = async () => {
+            const resp = await fetch('/logs');
+            const data = await resp.json();
+            document.getElementById("replay-data").textContent = data.logs;
+        };
+        // WebSocket for live updates
+        let ws;
+        function startWebSocket() {
+            ws = new WebSocket((location.protocol === 'https:' ? 'wss://' : 'ws://') + location.host + '/ws');
+            ws.onmessage = function(event) {
+                try {
+                    const data = JSON.parse(event.data);
+                    document.getElementById("mission-status").textContent = data.status + (data.progress !== undefined ? ` (Progress: ${data.progress}%)` : "");
+                    document.getElementById("progress-bar").style.width = (data.progress !== undefined ? `${data.progress}%` : "0%");
+                    if (data.lat && data.lon) {
+                        marker.setLatLng([data.lat, data.lon]);
+                        map.setView([data.lat, data.lon]);
+                    }
+                } catch {}
+            };
+            ws.onclose = function() {
+                setTimeout(startWebSocket, 2000);
+            };
+        }
+        window.onload = function() {
+            initMap();
+            fetchStatus();
+            fetchLogs();
+            fetchErrors();
+            startWebSocket();
+        };
+    </script>
+</body>
+</html>

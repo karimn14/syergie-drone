@@ -1,0 +1,44 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [107.6186, -6.9025]
+      },
+      "properties": {
+        "id": "Pohon-001",
+        "sex": "female",
+        "bloom": true,
+        "age": 8
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [107.6190, -6.9028]
+      },
+      "properties": {
+        "id": "Pohon-002",
+        "sex": "female",
+        "bloom": true,
+        "age": 10
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [107.6188, -6.9032]
+      },
+      "properties": {
+        "id": "Pohon-003",
+        "sex": "female",
+        "bloom": true,
+        "age": 8
+      }
+    }
+  ]
+}
