@@ -1,0 +1,103 @@
+%% Navigation Architecture — Data Flow Diagram
+%% Behavior-Based Tree Hopping System
+
+graph TB
+    subgraph SENSORS["📡 SENSORS"]
+        CAM["🎥 USB Camera<br/>640x480 @ 30fps"]
+        FLOW["🌊 Matek 3901-L0X<br/>Optical Flow + Rangefinder"]
+        IMU["🧭 Pixhawk IMU<br/>Accelerometer + Gyro"]
+        BARO["📊 Barometer<br/>Altitude (coarse)"]
+    end
+
+    subgraph PIXHAWK["🔧 PIXHAWK 2.4.8 (ArduPilot)"]
+        EKF["EKF3<br/>Sensor Fusion"]
+        POS["LOCAL_POSITION_NED<br/>(x, y, z) meters"]
+        VEL["Velocity Controller<br/>SET_POSITION_TARGET_LOCAL_NED"]
+        FC["Flight Controller<br/>Motor Mixing"]
+        FS["Failsafe Module<br/>Battery/RC/EKF"]
+    end
+
+    subgraph JETSON["🧠 JETSON NANO (This Document)"]
+        direction TB
+
+        subgraph DETECT["Detection Layer (CPU/GPU)"]
+            HSV["HSV Detector<br/>Flower + Trunk + Obstacle<br/>(CPU, ~3ms, 30 FPS)"]
+            YOLO["YOLOv8-nano TRT<br/>Precision Flower ID<br/>(GPU, ~45ms, 20 FPS)"]
+        end
+
+        subgraph NAV["Navigation Layer (CPU)"]
+            FSM["🔄 State Machine<br/>18 States<br/>(see Section 2)"]
+            SEARCH["Search Controller<br/>SCAN_360 / TRUNK_HOP / EXPLORE"]
+            SERVO["Visual Servo<br/>PID: yaw, vz, vx"]
+            AVOID["Obstacle Avoidance<br/>dark_ratio monitoring"]
+        end
+
+        subgraph MEMORY["Memory Layer (CPU, ~3KB)"]
+            TREES["Sprayed Trees List<br/>position + heading"]
+            ODOM["Local Odometry<br/>distance from last tree"]
+            HOME["Home Position<br/>arming origin"]
+            BUDGET["Mission Budget<br/>time + distance + sprays"]
+        end
+    end
+
+    subgraph ESP32["⚡ ESP32-S3"]
+        SPRAY_CTRL["Spray Controller<br/>Relay + Watchdog"]
+    end
+
+    %% Sensor connections
+    CAM --> HSV
+    CAM --> YOLO
+    FLOW --> EKF
+    IMU --> EKF
+    BARO --> EKF
+
+    %% Pixhawk internal
+    EKF --> POS
+    EKF --> FS
+    VEL --> FC
+
+    %% Pixhawk to Jetson (MAVLink)
+    POS -->|"MAVLink<br/>LOCAL_POSITION_NED<br/>@ 10Hz"| ODOM
+    POS -->|"MAVLink<br/>position + heading"| FSM
+
+    %% Detection to Navigation
+    HSV -->|"flowers, trunks,<br/>obstacles, gaps"| FSM
+    HSV -->|"dark_ratio"| AVOID
+    YOLO -->|"precise flower bbox<br/>(APPROACH only)"| SERVO
+
+    %% Navigation internal
+    FSM --> SEARCH
+    FSM --> SERVO
+    FSM --> AVOID
+    SEARCH --> FSM
+    AVOID -->|"INTERRUPT<br/>any state"| FSM
+
+    %% Memory interactions
+    FSM -->|"record spray"| TREES
+    FSM -->|"check budget"| BUDGET
+    TREES -->|"anti-revisit<br/>check"| FSM
+    ODOM -->|"distance tracking"| SEARCH
+    HOME -->|"RTL target"| FSM
+
+    %% Jetson to Pixhawk (MAVLink)
+    SERVO -->|"MAVLink<br/>SET_POSITION_TARGET_LOCAL_NED<br/>(vx, vy, vz, yaw_rate)<br/>@ 30Hz"| VEL
+    SEARCH -->|"MAVLink<br/>velocity commands"| VEL
+
+    %% Jetson to ESP32 (Serial)
+    FSM -->|"Serial USB<br/>SPRAY_ON / SPRAY_OFF<br/>115200 baud"| SPRAY_CTRL
+
+    %% Pixhawk to Motors
+    FC -->|"PWM<br/>1-4"| MOTORS["🔄 Motors x4"]
+
+    %% Styling
+    classDef sensor fill:#2196F3,stroke:#1565C0,color:white
+    classDef pixhawk fill:#FF9800,stroke:#E65100,color:white
+    classDef jetson fill:#4CAF50,stroke:#2E7D32,color:white
+    classDef esp32 fill:#9C27B0,stroke:#6A1B9A,color:white
+    classDef motor fill:#607D8B,stroke:#37474F,color:white
+
+    class CAM,FLOW,IMU,BARO sensor
+    class EKF,POS,VEL,FC,FS pixhawk
+    class HSV,YOLO,FSM,SEARCH,SERVO,AVOID,TREES,ODOM,HOME,BUDGET jetson
+    class SPRAY_CTRL esp32
+    class MOTORS motor

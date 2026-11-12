@@ -1,0 +1,36 @@
+%% Advanced Sensor Architecture Comparison
+%% Render: https://mermaid.live
+
+graph TB
+    subgraph BASELINE["PHASE 2: Current Baseline ($40)"]
+        direction TB
+        JW["🎥 Jete Webcam<br/>640×480 @ 30fps<br/>$15"]
+        MK["📡 Matek 3901-L0X<br/>Optical Flow + Range<br/>$25"]
+        
+        JW -->|"USB 2.0<br/>RGB only"| JN1["🖥️ JETSON NANO<br/>GPU: 50-60% (YOLO)<br/>CPU: 30-40% (HSV+PID)<br/>RAM: 2.2GB<br/>⚠️ HOT"]
+        MK -->|"I2C"| PX1["✈️ PIXHAWK<br/>EKF3 + LOITER"]
+        JN1 -->|"MAVLink"| PX1
+        JN1 -->|"Serial"| ESP1["⚡ ESP32<br/>Sprayer"]
+    end
+
+    subgraph MIDTIER["PHASE 3: Mid-Tier Upgrade ($209) ⭐ RECOMMENDED"]
+        direction TB
+        OAK["🎥 OAK-D Lite<br/>VPU: YOLO + Depth + Tracking<br/>ALL on camera!<br/>$149"]
+        MK2["📡 Matek 3901-L0X<br/>Optical Flow + Range<br/>$25"]
+        TF["📏 TFMini-S<br/>Forward LiDAR backup<br/>$20"]
+        
+        OAK -->|"USB 3.0<br/>Results only<br/>(JSON + depth)"| JN2["🖥️ JETSON NANO<br/>GPU: 0% 🎉<br/>CPU: 10-15%<br/>RAM: 1.5GB<br/>✅ COOL"]
+        MK2 -->|"I2C"| PX2["✈️ PIXHAWK<br/>EKF3 + LOITER"]
+        TF -->|"UART"| PX2
+        JN2 -->|"MAVLink"| PX2
+        JN2 -->|"Serial"| ESP2["⚡ ESP32<br/>Sprayer"]
+    end
+
+    BASELINE -.->|"OAK-D Lite<br/>replaces webcam<br/>+ add TFMini"| MIDTIER
+
+    style BASELINE fill:#fff3cd,stroke:#ffc107,color:#000
+    style MIDTIER fill:#d4edda,stroke:#28a745,color:#000
+    style OAK fill:#17a2b8,stroke:#117a8b,color:#fff
+    style JN1 fill:#dc3545,stroke:#c82333,color:#fff
+    style JN2 fill:#28a745,stroke:#1e7e34,color:#fff
+    style TF fill:#6f42c1,stroke:#5a32a3,color:#fff

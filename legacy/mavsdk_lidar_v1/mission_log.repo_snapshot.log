@@ -1,0 +1,143 @@
+2025-09-10 21:23:50 - INFO - [DroneSawit:prepare_mission_assets] - Memulai fase persiapan aset misi...
+2025-09-10 21:23:50 - ERROR - [DroneSawit:load_waypoints] - File data AI tidak ditemukan di path: mission_data/predicted_trees.geojson
+2025-09-10 21:23:50 - ERROR - [DroneSawit:prepare_mission_assets] - Tidak ada waypoints yang dimuat. Misi dibatalkan.
+2025-09-10 21:34:12 - INFO - [DroneSawit:prepare_mission_assets] - Memulai fase persiapan aset misi...
+2025-09-10 21:34:12 - INFO - [DroneSawit:prepare_mission_assets] - 3 waypoints berhasil dimuat.
+2025-09-10 21:34:12 - INFO - [DroneSawit:generate_mission_plan] - File .plan berhasil disimpan.
+2025-09-10 21:34:12 - INFO - [DroneSawit:prepare_mission_assets] - File rencana misi telah dibuat di: mission_data/route_mission.plan
+2025-09-10 21:34:12 - INFO - [DroneSawit:main] - Persiapan selesai. Menunggu untuk memulai eksekusi penerbangan.
+2025-09-10 21:34:12 - INFO - [DroneSawit:main] - Silakan unggah file .plan ke QGroundControl dan bersiap untuk terbang.
+2025-09-10 21:34:25 - INFO - [DroneSawit:run_flight_mission] - Memulai fase eksekusi misi...
+2025-09-10 21:34:25 - INFO - [DroneSawit:initialize] - Menghubungkan ke drone di serial:///dev/ttyACM0:57600...
+2025-09-10 21:52:30 - INFO - [DroneSawit:prepare_mission_assets] - Memulai fase persiapan aset misi...
+2025-09-10 21:52:30 - INFO - [DroneSawit:prepare_mission_assets] - 3 waypoints berhasil dimuat.
+2025-09-10 21:52:30 - INFO - [DroneSawit:generate_mission_plan] - File .plan berhasil disimpan.
+2025-09-10 21:52:30 - INFO - [DroneSawit:prepare_mission_assets] - File rencana misi telah dibuat di: mission_data/route_mission.plan
+2025-09-10 21:52:30 - INFO - [DroneSawit:main] - Persiapan selesai. Menunggu untuk memulai eksekusi penerbangan.
+2025-09-10 21:52:30 - INFO - [DroneSawit:main] - Silakan unggah file .plan ke QGroundControl dan bersiap untuk terbang.
+2025-09-10 21:52:32 - INFO - [DroneSawit:run_flight_mission] - Memulai fase eksekusi misi...
+2025-09-10 21:52:32 - INFO - [DroneSawit:initialize] - Menghubungkan ke drone di serial:///dev/ttyACM0:57600...
+2025-09-10 22:01:00 - INFO - [DroneSawit:prepare_mission_assets] - Memulai fase persiapan aset misi...
+2025-09-10 22:01:00 - INFO - [DroneSawit:prepare_mission_assets] - 3 waypoints berhasil dimuat.
+2025-09-10 22:01:00 - INFO - [DroneSawit:generate_mission_plan] - File .plan berhasil disimpan.
+2025-09-10 22:01:00 - INFO - [DroneSawit:prepare_mission_assets] - File rencana misi telah dibuat di: mission_data/route_mission.plan
+2025-09-10 22:01:00 - INFO - [DroneSawit:main] - Persiapan selesai. Menunggu untuk memulai eksekusi penerbangan.
+2025-09-10 22:01:00 - INFO - [DroneSawit:main] - Silakan unggah file .plan ke QGroundControl dan bersiap untuk terbang.
+2025-09-10 22:01:01 - INFO - [DroneSawit:run_flight_mission] - Memulai fase eksekusi misi...
+2025-09-10 22:01:01 - INFO - [DroneSawit:initialize] - Menghubungkan ke drone di serial:///COM4:57600...
+2025-09-10 22:01:17 - INFO - [DroneSawit:prepare_mission_assets] - Memulai fase persiapan aset misi...
+2025-09-10 22:01:17 - INFO - [DroneSawit:prepare_mission_assets] - 3 waypoints berhasil dimuat.
+2025-09-10 22:01:17 - INFO - [DroneSawit:generate_mission_plan] - File .plan berhasil disimpan.
+2025-09-10 22:01:17 - INFO - [DroneSawit:prepare_mission_assets] - File rencana misi telah dibuat di: mission_data/route_mission.plan
+2025-09-10 22:01:17 - INFO - [DroneSawit:main] - Persiapan selesai. Menunggu untuk memulai eksekusi penerbangan.
+2025-09-10 22:01:17 - INFO - [DroneSawit:main] - Silakan unggah file .plan ke QGroundControl dan bersiap untuk terbang.
+2025-09-10 22:01:18 - INFO - [DroneSawit:run_flight_mission] - Memulai fase eksekusi misi...
+2025-09-10 22:01:18 - INFO - [DroneSawit:initialize] - Menghubungkan ke drone di ...
+2025-09-10 22:02:48 - INFO - [DroneSawit:prepare_mission_assets] - Memulai fase persiapan aset misi...
+2025-09-10 22:02:48 - INFO - [DroneSawit:prepare_mission_assets] - 3 waypoints berhasil dimuat.
+2025-09-10 22:02:48 - INFO - [DroneSawit:generate_mission_plan] - File .plan berhasil disimpan.
+2025-09-10 22:02:48 - INFO - [DroneSawit:prepare_mission_assets] - File rencana misi telah dibuat di: mission_data/route_mission.plan
+2025-09-10 22:02:48 - INFO - [DroneSawit:main] - Persiapan selesai. Menunggu untuk memulai eksekusi penerbangan.
+2025-09-10 22:02:48 - INFO - [DroneSawit:main] - Silakan unggah file .plan ke QGroundControl dan bersiap untuk terbang.
+2025-09-10 22:02:49 - INFO - [DroneSawit:run_flight_mission] - Memulai fase eksekusi misi...
+2025-09-10 22:02:49 - INFO - [DroneSawit:initialize] - Menghubungkan ke drone di ...
+2025-09-10 22:07:01 - INFO - [DroneSawit:prepare_mission_assets] - Memulai fase persiapan aset misi...
+2025-09-10 22:07:01 - INFO - [DroneSawit:prepare_mission_assets] - 3 waypoints berhasil dimuat.
+2025-09-10 22:07:01 - INFO - [DroneSawit:generate_mission_plan] - File .plan berhasil disimpan.
+2025-09-10 22:07:01 - INFO - [DroneSawit:prepare_mission_assets] - File rencana misi telah dibuat di: mission_data/route_mission.plan
+2025-09-10 22:07:01 - INFO - [DroneSawit:main] - Persiapan selesai. Menunggu untuk memulai eksekusi penerbangan.
+2025-09-10 22:07:01 - INFO - [DroneSawit:main] - Silakan unggah file .plan ke QGroundControl dan bersiap untuk terbang.
+2025-09-10 22:07:02 - INFO - [DroneSawit:run_flight_mission] - Memulai fase eksekusi misi...
+2025-09-10 22:07:02 - INFO - [DroneSawit:initialize] - Menghubungkan ke drone di serial:///COM4:57600...
+2025-09-10 22:07:03 - INFO - [DroneSawit:initialize] - Drone terhubung!
+2025-09-10 22:07:03 - CRITICAL - [DroneSawit:init_lidar] - Gagal terhubung ke Lidar di port /dev/ttyUSB0: could not open port '/dev/ttyUSB0': FileNotFoundError(2, 'The system cannot find the path specified.', None, 3)
+2025-09-10 22:07:03 - INFO - [DroneSawit:run] - Memulai pengawasan keselamatan penerbangan...
+2025-09-10 22:07:03 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:03 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:04 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:04 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:04 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:04 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:05 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:05 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:05 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:05 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:05 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:06 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:06 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:06 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:06 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:06 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:07 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:07 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:07 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:07 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:07 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:08 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:08 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:08 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:08 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:09 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:09 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:09 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:09 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:09 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:10 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:10 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:10 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:10 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:10 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:11 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:11 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:11 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:11 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:11 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:12 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:12 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:12 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:12 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:13 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:13 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:13 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:13 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:13 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:14 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:14 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:14 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:14 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:14 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:15 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:15 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:15 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:15 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:15 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:16 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:16 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:16 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:16 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:16 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:17 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:17 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:17 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:17 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:18 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:18 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:18 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:18 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-10 22:07:18 - WARNING - [DroneSawit:get_distance] - Koneksi Lidar tidak tersedia.
+2025-09-11 05:31:43 - INFO - [DroneSawit:prepare_mission_assets] - Memulai fase persiapan aset misi...
+2025-09-11 05:31:43 - INFO - [DroneSawit:prepare_mission_assets] - 3 waypoints berhasil dimuat.
+2025-09-11 05:31:43 - INFO - [DroneSawit:generate_mission_plan] - File .plan berhasil disimpan.
+2025-09-11 05:31:43 - INFO - [DroneSawit:prepare_mission_assets] - File rencana misi telah dibuat di: mission_data/route_mission.plan
+2025-09-11 05:31:43 - INFO - [DroneSawit:<module>] - Persiapan selesai. Server web akan dimulai.
+2025-09-11 05:31:43 - INFO - [DroneSawit:<module>] - Buka browser dan akses http://<IP_JETSON>:8000
+2025-09-11 05:31:43 - INFO - [DroneSawit:<module>] - Setelah itu, kembali ke terminal ini.
+2025-09-11 05:31:43 - INFO - [DroneSawit:run_flight_supervisor] - Supervisor penerbangan akan dimulai setelah ENTER...
+2025-09-11 05:33:40 - INFO - [DroneSawit:websocket_endpoint] - Koneksi WebSocket ditutup.
+2025-09-11 21:56:13 - INFO - [DroneSawit:prepare_mission_assets] - Memulai fase persiapan aset misi...
+2025-09-11 21:56:13 - INFO - [DroneSawit:prepare_mission_assets] - 3 waypoints berhasil dimuat.
+2025-09-11 21:56:13 - INFO - [DroneSawit:generate_mission_plan] - File .plan berhasil disimpan.
+2025-09-11 21:56:13 - INFO - [DroneSawit:prepare_mission_assets] - File rencana misi telah dibuat di: mission_data/route_mission.plan
+2025-09-11 21:56:13 - INFO - [DroneSawit:main] - Persiapan selesai. Menunggu untuk memulai eksekusi penerbangan.
+2025-09-11 21:56:13 - INFO - [DroneSawit:main] - Silakan unggah file .plan ke QGroundControl dan bersiap untuk terbang.
+2025-09-11 21:56:15 - INFO - [DroneSawit:run_flight_mission] - Memulai fase eksekusi misi...

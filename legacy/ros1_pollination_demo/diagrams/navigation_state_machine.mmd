@@ -1,0 +1,120 @@
+%% Navigation State Machine — Detailed Transition Diagram
+%% Behavior-Based Tree Hopping
+
+stateDiagram-v2
+    [*] --> IDLE
+
+    state "🔒 IDLE" as IDLE
+    state "✅ PRE_FLIGHT" as PRE
+    state "🚀 TAKEOFF" as TAKEOFF
+    state "⬆️ CLIMB" as CLIMB
+    state "🔄 SCAN_360" as SCAN
+    state "🎯 ACQUIRE" as ACQUIRE
+    state "➡️ APPROACH" as APPROACH
+    state "🎯 SERVO_FINE" as FINE
+    state "💦 SPRAY" as SPRAY
+    state "⬅️ RETREAT" as RETREAT
+    state "🌴 TRUNK_HOP" as TRUNK
+    state "🔄 TRUNK_ORBIT" as ORBIT
+    state "🔍 EXPLORE" as EXPLORE
+    state "⚠️ OBSTACLE_AVOID" as OBSTACLE
+    state "🏠 RTL" as RTL
+    state "⬇️ DESCEND" as DESCEND
+    state "🆘 EMERGENCY_LAND" as ELAND
+
+    IDLE --> PRE : Arm command
+    PRE --> TAKEOFF : Checks pass
+    PRE --> IDLE : Checks fail
+    TAKEOFF --> CLIMB : Alt > 0.5m
+    CLIMB --> SCAN : Alt ≈ 1.5m
+
+    %% Search cycle
+    SCAN --> ACQUIRE : Flower found
+    SCAN --> TRUNK : Trunk found, no flower
+    SCAN --> EXPLORE : Nothing found
+
+    %% Acquire cycle
+    ACQUIRE --> APPROACH : Centered + new tree
+    ACQUIRE --> SCAN : Lost 3s OR same tree
+    ACQUIRE --> OBSTACLE : Obstacle detected
+
+    %% Approach cycle
+    APPROACH --> FINE : Close enough
+    APPROACH --> ACQUIRE : Target lost
+    APPROACH --> OBSTACLE : Obstacle detected
+
+    %% Fine servo
+    FINE --> SPRAY : Aligned + in range
+    FINE --> APPROACH : Lost alignment
+    FINE --> OBSTACLE : Obstacle detected
+
+    %% Spray and retreat
+    SPRAY --> RETREAT : Spray done (500ms)
+    RETREAT --> SCAN : Retreat complete (2m)
+    RETREAT --> RTL : Max sprays reached
+
+    %% Trunk hop cycle
+    TRUNK --> ORBIT : Close to trunk
+    TRUNK --> ACQUIRE : Flower found
+    TRUNK --> SCAN : Trunk lost
+    TRUNK --> OBSTACLE : Too close
+
+    %% Trunk orbit
+    ORBIT --> ACQUIRE : Flower found
+    ORBIT --> SCAN : Orbit timeout (12s)
+    ORBIT --> OBSTACLE : Obstacle detected
+
+    %% Explore cycle
+    EXPLORE --> SCAN : Reached waypoint
+    EXPLORE --> ACQUIRE : Flower found
+    EXPLORE --> TRUNK : Trunk found
+    EXPLORE --> RTL : Budget exhausted
+    EXPLORE --> OBSTACLE : Obstacle detected
+
+    %% Obstacle recovery
+    OBSTACLE --> SCAN : Cleared (stop→back→lateral)
+
+    %% RTL and landing
+    RTL --> DESCEND : Near home (< 1m)
+    DESCEND --> IDLE : Landed (alt < 0.15m)
+
+    %% Emergency
+    ELAND --> IDLE : Landed
+
+    %% Notes
+    note right of OBSTACLE
+        HIGHEST PRIORITY
+        Can interrupt ANY active state
+        Triggered by: dark_ratio > 0.35
+        or rapid blob growth
+    end note
+
+    note right of RTL
+        Triggers:
+        - Battery < 25%
+        - Explore timeout (120s)
+        - Distance budget (50m)
+        - Max sprays reached
+    end note
+
+    note right of ELAND
+        Triggers:
+        - Battery < 15%
+        - Camera lost > 10s
+        - Total system failure
+    end note
+
+    note left of SCAN
+        Duration: ~12s (360°)
+        Detects: Flowers, Trunks, Gaps
+        Uses: HSV only (CPU, 30fps)
+        First action after every
+        retreat or state reset
+    end note
+
+    note left of EXPLORE
+        Pattern: Expanding square
+        Speed: 0.5 m/s
+        SCAN_360 at each waypoint
+        Biased toward canopy gaps
+    end note

@@ -1,0 +1,76 @@
+dak bisa memetakan dependency tree, sehingga paket utama ROS dianggap "tidak ada".
+
+Langkah Perbaikan (Step-by-Step)
+Ikuti langkah ini secara berurutan untuk membersihkan konfigurasi lama dan memastikan environment siap.
+
+1. Aktifkan Repository Ubuntu (Wajib untuk Jetson)
+Nvidia Jetson seringkali datang dengan sources.list yang minimalis. Kita harus memastikan semua sumber standar aktif.
+
+Jalankan perintah ini satu per satu:
+
+Bash
+sudo apt-get update
+sudo apt-get install -y software-properties-common
+sudo add-apt-repository universe
+sudo add-apt-repository multiverse
+sudo add-apt-repository restricted
+2. Bersihkan Source List ROS yang Lama
+Karena Anda sudah mencoba beberapa cara dan mungkin ada conflict, kita hapus dulu konfigurasi ROS yang ada agar bersih.
+
+Bash
+sudo rm /etc/apt/sources.list.d/ros-latest.list
+sudo apt-key del C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+3. Tambahkan Ulang Repository ROS (Setup Bersih)
+Gunakan perintah standar ini. Perintah ini otomatis mendeteksi bahwa Anda menggunakan Jetson (ARM64) melalui lsb_release.
+
+Bash
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+4. Setup Key (Gunakan server Ubuntu, lebih stabil)
+Metode curl terkadang gagal jika ada firewall atau masalah proxy. Kita gunakan metode apt-key adv yang lebih robust untuk Jetson:
+
+Bash
+sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+5. Update dan Verifikasi (Critical Step)
+Lakukan update, tapi perhatikan outputnya. Jangan hanya melihat "Done" di akhir.
+
+Bash
+sudo apt-get update
+Pengecekan:
+Coba cari paketnya sekarang. Jangan langsung install, kita cek dulu apakah apt sudah "melihat" paketnya.
+
+Bash
+apt-cache policy ros-melodic-ros-base
+Jika Outputnya: Menampilkan Candidate: 1.4.1-0bionic... (atau versi lain), berarti paket SUDAH ditemukan.
+
+Jika Outputnya: Unable to locate package..., berarti repository masih belum terbaca.
+
+6. Install ROS Melodic
+Jika langkah 5 sukses (muncul versi candidate), jalankan instalasi:
+
+Bash
+sudo apt-get install -y ros-melodic-ros-base
+Debugging Lanjutan (Jika Masih Gagal)
+Jika masih muncul "Unable to locate package", mohon cek 3 hal ini:
+
+Cek Arsitektur:
+Pastikan Jetson Anda terdeteksi sebagai arm64.
+
+Bash
+dpkg --print-architecture
+Output wajib: arm64. Jika outputnya armhf atau lainnya, Anda mungkin menggunakan image OS yang salah (32-bit userspace pada kernel 64-bit jarang terjadi di Jetson modern, tapi mungkin terjadi).
+
+Cek Isi Sources List:
+Pastikan file list benar-benar terisi.
+
+Bash
+cat /etc/apt/sources.list.d/ros-latest.list
+Output harus: deb http://packages.ros.org/ros/ubuntu bionic main
+
+Masalah Koneksi (Hash Sum Mismatch):
+Terkadang internet provider mem-cache file index yang rusak. Coba ganti ke mirror lokal (misalnya jika di Indonesia/Asia) atau gunakan hotspot seluler sebentar untuk apt-get update.
+
+Opsi Mirror (Coba ini jika server utama gagal):
+
+Bash
+sudo sh -c 'echo "deb http://mirror-ap.packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+Apakah Anda ingin saya bantu mengecek log error spesifik jika lang

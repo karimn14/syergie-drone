@@ -1,0 +1,54 @@
+# General
+node_modules/
+dist/
+build/
+.env
+.env.local
+.env.*.local
+.DS_Store
+*.log
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.env
+*.venv
+yolov5/
+env/
+venv/
+backend/venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# VSCode
+.vscode/
+
+# Frontend (React/Vue/Angular)
+*.tsbuildinfo
+coverage/
+*.svelte-kit
+.next/
+frontend/node_modules/
+out/
+.cache/
+public/static/
+
+# Backend (Django/Flask/FastAPI)
+*.sqlite3
+db.sqlite3
+instance/
+*.db
+*.bak
+*.swp
+*.swo
+migrations/
+
+# Others
+.idea/
+*.iml
+*.bak
+*.tmp
+*.swp
+*.swo

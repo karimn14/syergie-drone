@@ -1,0 +1,71 @@
+%% Autonomous Pollination Drone — System Architecture
+%% Architecture: OPTION A — Full Pixhawk Control (No ESP32)
+%% Render at: https://mermaid.live or any Mermaid-compatible tool
+%% Updated: 2025-02-17
+
+graph TD
+    subgraph SENSORS["📡 SENSORS"]
+        CAM["🎥 Jete FHD 1080p<br/>USB Webcam<br/>(Front-Facing)<br/>640x480 @ 30fps"]
+        MATEK["📐 Matek 3901-L0X<br/>(Downward-Facing)<br/>PMW3901 Optical Flow<br/>+ VL53L1X ToF Rangefinder"]
+        IMU["⚙️ Pixhawk Internal<br/>IMU + Barometer<br/>+ Compass"]
+    end
+
+    subgraph JETSON["🧠 JETSON NANO 4GB"]
+        direction TB
+        GSTREAMER["GStreamer Pipeline<br/>v4l2 → nvvidconv<br/>(GPU-accelerated)"]
+        YOLO["YOLOv8-nano<br/>TensorRT FP16<br/>~20 FPS<br/>GPU: ~50%"]
+        SERVO_VIS["Visual Servo<br/>PID Controller<br/>(error_x → yaw_rate)<br/>(error_y → vz)<br/>(error_z → vx)"]
+        FSM["State Machine<br/>SEARCH → ACQUIRE →<br/>APPROACH → SPRAY →<br/>RETREAT"]
+        MAVLINK_NODE["MAVLink Interface<br/>(mavros)<br/>SET_POSITION_TARGET +<br/>DO_SET_SERVO (cmd 183)"]
+
+        GSTREAMER --> YOLO
+        YOLO -->|"bbox(cx,cy,area)"| SERVO_VIS
+        YOLO -->|"detection status"| FSM
+        FSM -->|"state commands"| SERVO_VIS
+        FSM -->|"SPRAY trigger<br/>via DO_SET_SERVO"| MAVLINK_NODE
+        SERVO_VIS -->|"vx, vz, yaw_rate"| MAVLINK_NODE
+    end
+
+    subgraph PIXHAWK["✈️ PIXHAWK (ArduPilot)"]
+        direction TB
+        EKF["EKF3<br/>State Estimator"]
+        CONTROLLER["Flight Controller<br/>GUIDED / LOITER Mode"]
+        MOTORS["Motor Mixer<br/>→ 4x ESC → Motors"]
+        AUX5["AUX5 (SERVO13)<br/>Pass-Through<br/>→ EDF Fan ESC"]
+        AUX6["AUX6 (SERVO14)<br/>Pass-Through<br/>→ MG996R Servo"]
+
+        EKF --> CONTROLLER
+        CONTROLLER --> MOTORS
+        CONTROLLER --> AUX5
+        CONTROLLER --> AUX6
+    end
+
+    subgraph ACTUATORS["⚡ ACTUATORS"]
+        PROPS["🌀 4x Propellers"]
+        FAN["💨 EDF Ducted Fan<br/>(Venturi air source)<br/>PWM 1000-1800μs"]
+        AUGER["⚙️ MG996R Servo<br/>(Auger feeder)<br/>PWM 1500=stop, 1650=feed"]
+    end
+
+    %% Sensor Connections
+    CAM -->|"USB 3.0"| GSTREAMER
+    MATEK -->|"I2C / SPI"| EKF
+    IMU --> EKF
+
+    %% Jetson → Pixhawk
+    MAVLINK_NODE -->|"UART 921600 baud<br/>MAVLink v2<br/>(TELEM2)"| CONTROLLER
+
+    %% Actuator Connections
+    MOTORS --> PROPS
+    AUX5 -->|"PWM Signal"| FAN
+    AUX6 -->|"PWM Signal"| AUGER
+
+    %% Styling
+    classDef sensor fill:#4CAF50,stroke:#333,stroke-width:2px,color:#fff
+    classDef jetson fill:#FF9800,stroke:#333,stroke-width:2px,color:#fff
+    classDef pixhawk fill:#2196F3,stroke:#333,stroke-width:2px,color:#fff
+    classDef actuator fill:#F44336,stroke:#333,stroke-width:2px,color:#fff
+
+    class CAM,MATEK,IMU sensor
+    class GSTREAMER,YOLO,SERVO_VIS,FSM,MAVLINK_NODE jetson
+    class EKF,CONTROLLER,MOTORS,AUX5,AUX6 pixhawk
+    class PROPS,FAN,AUGER actuator

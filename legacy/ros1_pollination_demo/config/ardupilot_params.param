@@ -1,0 +1,81 @@
+# ArduPilot Parameters for GPS-Denied Flight with Optical Flow
+# =============================================================
+# Hardware: Pixhawk + Matek 3901-L0X (PMW3901 + VL53L1X)
+# Load via Mission Planner: Config → Full Parameter List → Load from file
+#
+# WARNING: Review each parameter for your specific Pixhawk version.
+#          Test in a safe environment before flight.
+
+# ─── Optical Flow (Matek 3901-L0X via I2C) ───
+FLOW_TYPE,5
+FLOW_ADDR,42
+FLOW_ORIENT_YAW,0
+FLOW_POS_X,0.0
+FLOW_POS_Y,0.0
+FLOW_POS_Z,0.0
+FLOW_FXSCALER,0
+FLOW_FYSCALER,0
+
+# ─── Rangefinder (VL53L1X on Matek 3901-L0X via I2C) ───
+RNGFND1_TYPE,12
+RNGFND1_ADDR,41
+RNGFND1_MIN_CM,5
+RNGFND1_MAX_CM,400
+RNGFND1_ORIENT,25
+RNGFND1_GNDCLEAR,10
+
+# ─── EKF3 Configuration (GPS-Denied) ───
+EK2_ENABLE,0
+EK3_ENABLE,1
+EK3_SRC1_POSXY,0
+EK3_SRC1_VELXY,5
+EK3_SRC1_POSZ,2
+EK3_SRC1_VELZ,0
+EK3_SRC1_YAW,1
+EK3_GPS_TYPE,3
+AHRS_EKF_TYPE,3
+
+# ─── GPS (Disabled/Deprioritized) ───
+GPS_TYPE,0
+GPS_TYPE2,0
+
+# ─── Flight Modes ───
+FLTMODE1,5
+FLTMODE4,4
+FLTMODE6,9
+
+# ─── Arming ───
+ARMING_CHECK,1
+ARMING_REQUIRE,1
+
+# ─── Sprayer Actuators (Full Pixhawk Control — Option A) ───
+# AUX5 (SERVO13) → EDF Fan ESC (Brushless Blower)
+# AUX6 (SERVO14) → MG996R Continuous Rotation Servo (Auger Feeder)
+#
+# IMPORTANT: BRD_PWM_COUNT must be ≤4 to free AUX5+AUX6 as GPIO/servo pass-through.
+# On Pixhawk 2.4.8, MAIN1-4 drive flight motors, AUX1-4 can be motor outputs or servos.
+# Setting BRD_PWM_COUNT=4 means MAIN1-4 are motor PWM, AUX1-6 are all available for servos.
+
+BRD_PWM_COUNT,4
+
+# AUX Channel 5 → EDF Fan ESC
+SERVO13_FUNCTION,0
+SERVO13_MIN,1000
+SERVO13_MAX,2000
+SERVO13_TRIM,1000
+SERVO13_REVERSED,0
+
+# AUX Channel 6 → MG996R Continuous Servo (Auger)
+SERVO14_FUNCTION,0
+SERVO14_MIN,1000
+SERVO14_MAX,2000
+SERVO14_TRIM,1500
+SERVO14_REVERSED,0
+
+# ─── OLD RELAY CONFIG (REMOVED — replaced by servo channels above) ───
+# RELAY_PIN,54       ← DELETED: No longer using relay for sprayer
+# RELAY_DEFAULT,0    ← DELETED
+
+# ─── Serial for Jetson Nano (TELEM2 typically) ───
+SERIAL2_PROTOCOL,2
+SERIAL2_BAUD,921

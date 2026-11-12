@@ -1,11 +1,50 @@
-# Virtual Environment
-venv/
-/venv/
+# Python environments and generated files
+**/.venv/
+**/venv/
+**/myenv/
+**/drone_env/
+**/site-packages/
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
-# Python cache
-__pycache__/
-*.pyc
+# ROS 2 / colcon output and recordings generated during runs
+**/build/
+**/install/
+**/log/
+*.bag
+*.db3
+*.mcap
+*.ulg
+*.tlog
+*.log
+!legacy/mavsdk_lidar_v1/mission_log.log
+!legacy/mavsdk_lidar_v1/mission_log.repo_snapshot.log
 
-# IDE / Editor folders
+# Local configuration/secrets
+.env
+**/.env
+!.env.example
+!**/.env.example
+*.pem
+*.key
+
+# Editor and OS artifacts
 .vscode/
+**/.vscode/
 .idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local caches, autosaves and binaries from a different OS
+*.cache
+*.exe
+
+# Local source archives: extracted CAD is versioned; originals stay in the workspace
+*.zip
+
+# Vendored upstream repository remains local reference, not project code
+legacy/palm_planner/yolov5/

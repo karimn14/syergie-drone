@@ -1,0 +1,24 @@
+opencv-python>=4.8.0
+numpy>=1.24.0
+pymavlink>=2.4.40
+
+# ═══════════════════════════════════════════════════
+# ROS SYSTEM PACKAGES (install via apt, NOT pip)
+# ═══════════════════════════════════════════════════
+# Architecture: Full Pixhawk Control (Option A) — No ESP32
+#
+# sudo apt-get install -y ros-melodic-mavros ros-melodic-mavros-extras
+# (or ros-noetic-mavros ros-noetic-mavros-extras for Ubuntu 20.04)
+#
+# Then install GeographicLib datasets:
+# wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh
+# chmod +x install_geographiclib_datasets.sh && sudo ./install_geographiclib_datasets.sh
+
+# Optional — uncomment when running on Jetson Nano with ROS
+# rospkg
+# catkin_pkg
+
+# Optional — uncomment for YOLO TensorRT inference
+# ultralytics>=8.0.0
+# tensorrt
+# pycuda

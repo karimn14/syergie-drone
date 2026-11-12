@@ -1,0 +1,79 @@
+%% Visual Servoing State Machine
+%% Architecture: OPTION A — Full Pixhawk Control (No ESP32)
+%% Render at: https://mermaid.live
+%% Updated: 2025-02-17
+
+stateDiagram-v2
+    [*] --> IDLE
+
+    IDLE --> SEARCH: Mission Start Command
+
+    SEARCH --> ACQUIRE: YOLO Detection (conf > 0.65)
+    SEARCH --> IDLE: Timeout 30s / Mission Abort
+
+    ACQUIRE --> APPROACH: |err_x| < 80px AND |err_y| < 60px
+    ACQUIRE --> SEARCH: Detection Lost > 3s
+    ACQUIRE --> SEARCH: Timeout 10s
+
+    APPROACH --> SPRAY_FAN_SPOOL: bbox_area > SPRAY_DIST AND err < TOLERANCE
+    APPROACH --> ACQUIRE: Detection Lost > 1s (re-center)
+    APPROACH --> RETREAT: Timeout 15s
+    APPROACH --> RETREAT: bbox_area > MAX_SAFE (too close!)
+
+    state SPRAY_SEQUENCE {
+        SPRAY_FAN_SPOOL --> SPRAY_ACTIVE: Fan spool 400ms complete
+        SPRAY_ACTIVE --> SPRAY_SHUTDOWN: Spray duration 500ms complete
+        SPRAY_SHUTDOWN --> SPRAY_DONE: Fan clear 300ms complete
+    }
+
+    SPRAY_DONE --> RETREAT: Spray Sequence Complete
+
+    RETREAT --> SEARCH: Retreat Complete (2s backward)
+
+    note right of SEARCH
+        Action: Slow yaw rotation
+        Velocity: wz = 0.3 rad/s
+        All other velocities = 0
+    end note
+
+    note right of ACQUIRE
+        Action: Coarse centering
+        PID Yaw + PID Alt active
+        PID Forward = 0
+    end note
+
+    note right of APPROACH
+        Action: Fine centering + advance
+        All 3 PIDs active
+        Max forward speed: 0.3 m/s
+    end note
+
+    note right of SPRAY_FAN_SPOOL
+        DO_SET_SERVO(13, 1400→1600→1800)
+        Soft-start EDF fan ramp
+        Feeder OFF (PWM 1500)
+    end note
+
+    note right of SPRAY_ACTIVE
+        Fan ON (SERVO13 = 1800us)
+        Feeder ON (SERVO14 = 1650us)
+        Powder dispensing for 500ms
+    end note
+
+    note right of SPRAY_SHUTDOWN
+        Feeder OFF (SERVO14 = 1500us)
+        Fan continues 300ms to clear tube
+        Then Fan OFF (SERVO13 = 1000us)
+    end note
+
+    note right of RETREAT
+        Action: Reverse at 0.3 m/s
+        Duration: 2 seconds
+        No detection needed
+    end note
+
+    state GLOBAL_SAFETY {
+        [*] --> EMERGENCY_HOVER: MAVLink Heartbeat Lost
+        [*] --> EMERGENCY_LAND: Battery < 20%
+        [*] --> EMERGENCY_CLIMB: Rangefinder < 0.3m
+    }

@@ -1,0 +1,97 @@
+<!-- demo.launch — Main launch file for Sprayer Control Demo -->
+<!-- Package: sprayer_control -->
+<!--
+    Architecture: OPTION A — Full Pixhawk Control (No ESP32)
+    Updated: 2025-02-17
+
+    Pixhawk connected to Jetson via TELEM2 UART at 921600 baud.
+    mavros communicates with Pixhawk over MAVLink.
+    spray_logic_node sends DO_SET_SERVO commands through mavros.
+
+    Usage:
+        roslaunch sprayer_control demo.launch
+        roslaunch sprayer_control demo.launch camera_device:=/dev/video1
+        roslaunch sprayer_control demo.launch fcu_url:=/dev/ttyTHS1:921600
+-->
+<launch>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- ARGUMENTS (override from command line)      -->
+    <!-- ═══════════════════════════════════════════ -->
+    <arg name="camera_device" default="/dev/video0" />
+    <arg name="image_width"   default="640" />
+    <arg name="image_height"  default="480" />
+    <arg name="framerate"     default="30" />
+
+    <!-- Pixhawk UART connection (Jetson TELEM2 / USB) -->
+    <arg name="fcu_url"       default="/dev/ttyTHS1:921600" />
+    <arg name="gcs_url"       default="" />
+    <arg name="tgt_system"    default="1" />
+    <arg name="tgt_component" default="1" />
+
+    <!-- Sprayer servo parameters -->
+    <arg name="fan_channel"     default="13" />
+    <arg name="feeder_channel"  default="14" />
+    <arg name="fan_pwm"         default="1800" />
+    <arg name="feeder_pwm"      default="1650" />
+    <arg name="fan_spool_time"  default="0.4" />
+    <arg name="fan_shutdown_time" default="0.3" />
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- MAVROS (MAVLink ↔ Pixhawk bridge)           -->
+    <!-- ═══════════════════════════════════════════ -->
+    <include file="$(find mavros)/launch/apm.launch">
+        <arg name="fcu_url"       value="$(arg fcu_url)" />
+        <arg name="gcs_url"       value="$(arg gcs_url)" />
+        <arg name="tgt_system"    value="$(arg tgt_system)" />
+        <arg name="tgt_component" value="$(arg tgt_component)" />
+    </include>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- USB CAMERA NODE (usb_cam)                   -->
+    <!-- ═══════════════════════════════════════════ -->
+    <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen">
+        <param name="video_device"   value="$(arg camera_device)" />
+        <param name="image_width"    value="$(arg image_width)" />
+        <param name="image_height"   value="$(arg image_height)" />
+        <param name="framerate"      value="$(arg framerate)" />
+        <param name="pixel_format"   value="mjpeg" />
+        <param name="camera_name"    value="webcam" />
+        <param name="io_method"      value="mmap" />
+    </node>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- YELLOW BALL DETECTOR NODE                   -->
+    <!-- ═══════════════════════════════════════════ -->
+    <node name="detector" pkg="sprayer_control" type="detector_node.py" output="screen">
+        <!-- HSV thresholds for yellow detection -->
+        <!-- Tune these with hsv_tuner.py first! -->
+        <param name="hsv_h_low"   value="20" />
+        <param name="hsv_h_high"  value="35" />
+        <param name="hsv_s_low"   value="100" />
+        <param name="hsv_s_high"  value="255" />
+        <param name="hsv_v_low"   value="100" />
+        <param name="hsv_v_high"  value="255" />
+
+        <!-- Detection parameters -->
+        <param name="min_contour_area"      value="500" />
+        <param name="center_tolerance"      value="0.15" />
+        <param name="close_area_threshold"  value="15000" />
+        <param name="far_area_threshold"    value="2000" />
+    </node>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SPRAY LOGIC NODE (State Machine + mavros)   -->
+    <!-- ═══════════════════════════════════════════ -->
+    <node name="spray_logic" pkg="sprayer_control" type="spray_logic_node.py" output="screen">
+        <param name="spray_duration"      value="0.5" />
+        <param name="cooldown_duration"   value="2.0" />
+        <param name="alignment_hold_time" value="1.0" />
+        <param name="detection_timeout"   value="2.0" />
+        <param name="fan_spool_time"      value="$(arg fan_spool_time)" />
+        <param name="fan_shutdown_time"   value="$(arg fan_shutdown_time)" />
+        <param name="fan_pwm"             value="$(arg fan_pwm)" />
+        <param name="feeder_pwm"          value="$(arg feeder_pwm)" />
+    </node>
+
+</launch>

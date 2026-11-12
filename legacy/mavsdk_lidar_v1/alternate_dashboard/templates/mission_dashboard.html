@@ -1,0 +1,154 @@
+<!-- file: templates/mission_dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drone Sawit Mission Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; background: #f0f2f5; }
+        header { padding: 1.5em; background: #2e7d32; color: #fff; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h1 { margin: 0; }
+        main { padding: 2em; max-width: 900px; margin: auto; }
+        .card { background: #fff; padding: 2em; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2em; }
+        .status-box { font-size: 2em; font-weight: bold; padding: 20px; border-radius: 10px; margin-top: 10px; text-align: center; transition: all 0.5s ease; color: white; }
+        .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; margin-top: 1em; font-size: 1.2em; text-align: center; }
+        .data-point span { display: block; font-size: 0.8em; color: #666; }
+        /* Kelas Status */
+        .status-flying { background-color: #28a745; }
+        .status-paused { background-color: #dc3545; }
+        .status-init { background-color: #ffc107; color: #333; }
+        .status-disconnected { background-color: #6c757d; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Drone Sawit Mission Dashboard</h1>
+    </header>
+    <main>
+        <section class="card">
+            <h2>Live Status</h2>
+            <!-- DUMMY DATA MODE: To restore real-time updates, uncomment the JS block below and remove dummy values. -->
+            <div class="data-grid">
+                <div class="data-point">
+                    <strong id="distance-value">2.34</strong> m <!-- Restore: dynamic lidar_distance -->
+                    <span>Jarak Lidar</span>
+                </div>
+                <div class="data-point">
+                    <strong id="battery-value">87</strong> % <!-- Restore: dynamic battery_percent -->
+                    <span>Baterai</span>
+                </div>
+                <div class="data-point">
+                    <strong id="altitude-value">15.2</strong> m <!-- Restore: dynamic altitude -->
+                    <span>Altitude</span>
+                </div>
+                <div class="data-point">
+                    <strong id="speed-value">3.5</strong> m/s <!-- Restore: dynamic speed -->
+                    <span>Kecepatan</span>
+                </div>
+                <div class="data-point">
+                    <strong id="lat-value">-2.12345</strong> <!-- Restore: dynamic latitude -->
+                    <span>Latitude</span>
+                </div>
+                <div class="data-point">
+                    <strong id="lon-value">111.12345</strong> <!-- Restore: dynamic longitude -->
+                    <span>Longitude</span>
+                </div>
+                <div class="data-point">
+                    <strong id="heading-value">45</strong> ° <!-- Restore: dynamic heading -->
+                    <span>Heading</span>
+                </div>
+                <div class="data-point">
+                    <strong id="satellite-value">10</strong> <!-- Restore: dynamic satellites -->
+                    <span>Satellites</span>
+                </div>
+            </div>
+            <div id="status-box" class="status-box status-flying">FLYING</div> <!-- Restore: dynamic mission_status -->
+        </section>
+
+        <section class="card">
+            <h2>Spraying Status</h2>
+            <div class="data-grid">
+                <div class="data-point">
+                    <strong id="spraying-status">ON</strong> <!-- Restore: dynamic spraying_status -->
+                    <span>Status Penyemprotan</span>
+                </div>
+                <div class="data-point">
+                    <strong id="current-waypoint">3</strong> <!-- Restore: dynamic current_waypoint -->
+                    <span>Waypoint Saat Ini</span>
+                </div>
+                <div class="data-point">
+                    <strong id="total-waypoints">12</strong> <!-- Restore: dynamic total_waypoints -->
+                    <span>Total Waypoint</span>
+                </div>
+                <div class="data-point">
+                    <strong id="spraying-progress">25</strong> % <!-- Restore: dynamic spraying_progress -->
+                    <span>Progress Penyemprotan</span>
+                </div>
+                <div class="data-point">
+                    <strong id="spraying-duration">8</strong> s <!-- Restore: dynamic spraying_duration -->
+                    <span>Durasi Penyemprotan (waypoint ini)</span>
+                </div>
+            </div>
+        </section></div>
+    </main>
+    <!--
+    <script>
+        function startWebSocket() {
+            const ws_protocol = location.protocol === 'https:' ? 'wss://' : 'ws://';
+            const ws = new WebSocket(ws_protocol + location.host + '/ws');
+
+            ws.onmessage = function(event) {
+                try {
+                    const data = JSON.parse(event.data);
+                    const statusBox = document.getElementById('status-box');
+                    const distanceEl = document.getElementById('distance-value');
+                    const batteryEl = document.getElementById('battery-value');
+                    
+                    // Update Jarak Lidar
+                    distanceEl.textContent = (data.lidar_distance !== null && data.lidar_distance >= 0) ? data.lidar_distance.toFixed(2) : 'N/A';
+
+                    // Update Baterai
+                    batteryEl.textContent = data.battery_percent;
+
+                    // Update Status Box
+                    statusBox.textContent = data.mission_status.replace('_', ' ');
+                    statusBox.className = 'status-box'; // Reset class
+
+                    if (!data.is_connected) {
+                        statusBox.classList.add('status-disconnected');
+                        statusBox.textContent = 'DISCONNECTED';
+                    } else if (data.mission_status === 'FLYING') {
+                        statusBox.classList.add('status-flying');
+                    } else if (data.mission_status === 'PAUSED_OBSTACLE') {
+                        statusBox.classList.add('status-paused');
+                    } else {
+                        statusBox.classList.add('status-init');
+                    }
+
+                } catch (e) {
+                    console.error("Error parsing WebSocket message:", e);
+                }
+            };
+
+            ws.onclose = function() {
+                console.log('WebSocket tertutup. Mencoba menghubungkan kembali dalam 2 detik...');
+                const statusBox = document.getElementById('status-box');
+                statusBox.className = 'status-box status-disconnected';
+                statusBox.textContent = 'CONNECTION LOST';
+                setTimeout(startWebSocket, 2000);
+            };
+
+            ws.onerror = function(err) {
+                console.error('WebSocket error: ', err);
+                ws.close();
+            };
+        }
+
+        window.onload = function() {
+            startWebSocket();
+        };
+    </script>
+    -->
+</body>
+</html>

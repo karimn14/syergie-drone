@@ -1,0 +1,18 @@
+# --- Komunikasi Drone & Hardware ---
+mavsdk==1.4.1        # Library utama untuk berkomunikasi dengan Pixhawk (mengirim perintah, menerima telemetri).
+pyserial==3.5        # Untuk komunikasi serial dengan perangkat seperti Lidar TF-Luna atau Arduino.
+pymavlink==2.4.39    # Dibutuhkan oleh MAVSDK dan untuk mengirim pesan telemetri kustom.
+
+# --- Pengolahan Data & Geografis ---
+pandas==1.5.3        # Digunakan untuk membaca dan mengelola data CSV, seperti daftar perintah semprot.
+numpy==1.24.2        # Library fundamental untuk komputasi numerik, sering digunakan bersama pandas dan OpenCV.
+scipy==1.10.1        # Digunakan untuk fungsi ilmiah, khususnya untuk membuat rute penerbangan yang lebih halus (interpolasi spline).
+geopy==2.3.0         # Untuk menghitung jarak akurat antara dua titik koordinat GPS.
+
+# --- Computer Vision & AI ---
+opencv-python==4.7.0.72  # Library utama untuk semua tugas yang berhubungan dengan kamera (validasi visual, VIO fallback).
+torch==2.0.1         # Framework machine learning untuk menjalankan model AI Anda (file .pt).
+torchvision==0.15.2  # Komponen pendukung untuk torch, biasanya dibutuhkan untuk transformasi gambar.
+
+# --- Utilitas & Jaringan ---
+requests==2.28.2     # Memudahkan untuk mengambil data dari internet, seperti data cuaca dari API.
